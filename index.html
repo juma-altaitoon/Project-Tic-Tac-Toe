@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <header>
+        <h1>Tic Tac Toe</h1>
+        <!--img logo here-->
+    </header>
+        <div class="container1">
+            <div class="player one">
+            <h3>Player 1</h3>
+            <input type="text" id="player1" value="Player 1 ">
+            </div>
+            <div class="round">
+                <label for="rounds"><h3>Number of Rounds</h3></label>
+                <select name="Number of Rounds" id="rounds">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="player two">
+                <h3>Player 2</h3>
+                <input type="text" id="player2" value="Player 2 ">
+            </div>
+        </div> 
+        <div class="gameContainer">
+            <div class="index" id="one">one</div>
+            <div class="index" id="two">two</div>
+            <div class="index" id="three">three</div>
+            <div class="index" id="four">four</div>
+            <div class="index" id="five">five</div>
+            <div class="index" id="six">six</div>
+            <div class="index" id="seven">seven</div>
+            <div class="index" id="eight">eight</div>
+            <div class="index" id="nine">nine</div>
+        </div>
+        <h3>The Score</h3>
+        <div class="scoreboard">
+            <div class = "result one">
+                <h4>Player 1</h4>
+                <h5>Score</h5>
+            </div>
+            <div class = "result draw">
+                <h4>DRAWS</h4>
+                <h5>Score</h5>
+            </div>
+            <div class = "result two">
+                <h4>Player 1</h4>
+                <h5>Score</h5>
+            </div>
+
+        </div>
+        <button class="reset">Reset</button>
+
+                
+
+
+    <!-- <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script> -->
+    <script src="js/JQuery.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

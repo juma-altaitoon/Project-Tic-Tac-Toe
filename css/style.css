@@ -1,0 +1,58 @@
+body { 
+    background-color: brown;
+    text-align: center;
+}
+header {
+    text-align: center;
+    
+}
+.container1 {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+}
+.gameContainer {
+    max-width: 500px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1px;
+    margin: 20px auto;
+    padding: 0;  
+    border: solid blue;
+    text-align: center;
+    
+}
+.index {
+    width: 90%;
+    height: 90%;
+    background-color: black;
+    color: white;
+    border: solid white;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hoverOver {
+    width: 90%;
+    height: 90%;
+    background-color: green;
+    color: white;
+    border: solid white;
+}
+.x {
+    width: 80%;
+    height: 80%;
+    font-size: xx-large; 
+    color:blue;
+    padding: 0;
+    margin: 0;
+    border: solid red;
+}
+.scoreboard {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}

@@ -13,20 +13,20 @@ header {
 
 }
 .gameContainer {
+    background-color: rgba(14, 201, 218, 0.789);
     max-width: 500px;
     height: 500px;
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 1px;
     margin: 20px auto;
-    padding: 0;  
+    padding: 10px;  
     border: solid blue;
     text-align: center;
-    
 }
 .index {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     background-color: black;
     color: white;
     border: solid white;
@@ -34,19 +34,23 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
 }
 .hoverOver {
-    width: 90%;
-    height: 90%;
     background-color: green;
     color: white;
     border: solid white;
 }
 .x {
-    width: 80%;
-    height: 80%;
     font-size: xx-large; 
     color:blue;
+    padding: 0;
+    margin: 0;
+    border: solid red;
+}
+.o {
+    font-size: xx-large; 
+    color:white;
     padding: 0;
     margin: 0;
     border: solid red;

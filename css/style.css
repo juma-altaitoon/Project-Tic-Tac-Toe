@@ -60,3 +60,6 @@ header {
     flex-flow: row wrap;
     justify-content: space-around;
 }
+.currentPlayer{
+    color: blue;
+}

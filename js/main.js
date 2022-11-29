@@ -1,29 +1,44 @@
 // Array of Winnig Patterns
 const winCondition = [["one","two","three"],["four","five","six"],["seven","eight","nine"],["one","four","seven"],["two","five","eight"],["three","six","nine"],["one","five","nine"],["three","five","seven"]];
+// Number of turns- to trigger a draw if winCond is not executed
 let numberOfturns = 0;
-let playerSelect ={
-    'player1': [],
-    'player2': []
-};
+let playerSelect ={'player1': [],'player2': []};
+let playerScore = { 'player1': 0, 'player': 0, 'draw': 0}
 let playerIs = "player1";
+
+$('.start').on('click', startGame);
+$('.reset').on('click', restartGame);
+// Function to start the game
 
 $('.index').click(function(){
     if (playerIs === "player1"){playerChar= 'X';}
 else if(playerIs ==="player2"){ playerChar = 'O';}
-    $(this).text(playerChar);
-    playerSelect[playerIs].push($(this).attr('id'));
     numberOfturns++
+    $(this).text(playerChar);
+    $(this).css({color: 'black', backgroundColor: 'white', border: 'solid black'});
+    // console.log($(this).attr('id'));
+    playerSelect[playerIs].push($(this).attr('id'));
+    $(this).unbind('click');
+    
     if (winCond()) {
-        alert("The Winner is");
+        console.log("Check Execution "+ winCond())
+        // console.log(`The Winner is ${playerIs}`);
+        alert(`The Winner is ${playerIs}`);
+        playerScore[playerIs]++;
+        $('.index').unbind('click');
+        $('.gameContainer').dblclick(startGame);
     }
-    if(drawCond()) {
-        alert(`It's a DRAW!`)
+    else if(drawCond()) {
+        console.log(`It's a DRAW!`);
+        alert(`It's a DRAW!`);
+        playerScore['draw']++;
+        $('.index').unbind('click');
     }
     console.log(numberOfturns);
-
-    switchPlayers();
     console.log(playerIs);
-    console.log(playerSelect);
+    console.log(playerSelect[playerIs]);    
+    switchPlayers();
+
 });
 
 //Player 1 Input
@@ -32,6 +47,7 @@ $('#player1').keypress(function(e){
     if (e.which == 13){
         $('.one h3').text(playerText);
         $('#player1').prop('disabled',true);
+        $('.one h4').text(playerScore['player1']);
 }})
 //Player 2 Input
 $('#player2').keypress(function(e){
@@ -39,6 +55,7 @@ $('#player2').keypress(function(e){
     if (e.which == 13){
         $('.two h3').text(playerText);
         $('#player2').prop('disabled',true);
+        $('.two h4').text(playerScore['player2']);
 }})
 // Highlight onHover Boxes:
 function toggleOnHover (){
@@ -49,50 +66,65 @@ function toggleOnHover (){
 $('.index').mouseenter( toggleOnHover);
 $('.index').mouseleave( toggleOnHover);
 
-
 // Switch Players
 function switchPlayers() {
     if(playerIs === "player1"){
         playerIs = "player2";
+        $('.two h3').toggleClass("currentPlayer");
+        if ($('.one h3').hasClass("currentPlayer")){
+            $('.one h3').toggleClass("currentPlayer");
+        }
     }
     else if (playerIs === "player2"){
         playerIs = "player1";
-    }
+        $('.one h3').toggleClass("currentPlayer");
+        if ($('.two h3').hasClass("currentPlayer")){
+            $('.two h3').toggleClass("currentPlayer");
+        }}
 }
 
 //Check for win condition
 function winCond(){
-   if (numberOfturns >4 && numberOfturns<=9){ 
-    winCondition.forEach(element => {
-    let hasWinCond = true;    
-    for (i=0; i<element.length; i++) {
-        if (playerSelect[playerIs].includes(element[i])<0){
-            hasWinCond = false;
-            return hasWinCond;
-            break;
-        }
-        else{return;}
+    if (numberOfturns >4 && numberOfturns<9){ 
+        let hasWinCond = true;
+        // 
+        winCondition.forEach(element => {
+            for (i=0; i<element.length; i++) {
+                //console.log(`$i=${i}--${playerSelect[playerIs]}--${playerIs}----- element(i)= ${element[i]}`);
+                console.log(playerSelect[playerIs].includes(element[i])) ;
+                
+                if (playerSelect[playerIs].includes(element[i])){
+                    hasWinCond = true;
+                }
+                else{
+                    hasWinCond = false;
+                    break;
+                }
+            } 
+            console.log("2ndLast Check -->"+hasWinCond);    
+            if (hasWinCond){
+                return true;
+            }           
+        });
+        console.log("Last Check -->"+hasWinCond);
     }
-    // hasWinCond = element.every(box => {
-    //     //console.log(playerSelect[playerIs].indexOf(box)); 
-    //     return playerSelect[playerIs].includes(box) ==-1;
-    // }) ;
-    console.log(hasWinCond);
-    if (hasWinCond){
-        return true;
-    }
-    });
-    }
-    
-}   
+}
+
 function drawCond (){
     // Draw
-    if (numberOfturns >9){
+    if (numberOfturns === 9){
         return true;
     }
     else {
         return;
     }
+}
+function startGame() {
+    location.reload();
+}
+// Function to restart the game
+function restartGame(){
+    location.reload();
 }
 
 // winCondition.forEach(element => {
@@ -168,4 +200,4 @@ function drawCond (){
 //         }
 //     }
      
- // $('.index').click(storeSelect);
+ // $('.index').click(storeSelect)

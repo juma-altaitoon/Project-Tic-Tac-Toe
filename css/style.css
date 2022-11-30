@@ -2,64 +2,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Merienda+One&display=swap');
 /*font-family: 'Merienda One', cursive; */
 body { 
-    background-color: brown;
+    background-color: black;
     text-align: center;
     font-family: 'Merienda One', cursive;
+    color: white;
+    justify-content:center;
+    margin: auto;
 }
-
 header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     text-align: center;
-    font-size: 3rem;
-    
 }
 .logo { 
-    height: 80px;
-    width: 80px;
+    height: 50px;
+    width: 50px;
 }
 .music {
-    height: 80px;
-    width: 80px;
-
+    height: 50px;
+    width: 50px;
+    background-color: blue;
+    border-radius: 30px;
 }
 .container1 {
+    margin: 0 auto;
+    max-width: 500px;
     grid-area: right;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
-    font-size: 1.5rem;
-
+    justify-content: space-between;
 }
-.gameContainer {
-    background-color: rgba(14, 201, 218, 0.789);
+
+input {
+    width: 60%;
+    text-align: center;
+}
+button {
+    border-radius: 15px;
+    width: 20%;
+    margin: 1%;
+    font-weight: bolder;
+    border: solid red;
+}
+.gameContainer {    
+    background-color: blue;
     max-width: 500px;
     height: 500px;
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 1px;
-    margin: 20px auto;
-    padding: 10px;  
+    margin: 5px auto;
+    padding: 5px;  
     border: solid blue;
     text-align: center;
+    
 }
 .index {
     width: 100%;
     height: 100%;
-    background-color: black;
-    color: white;
-    border: solid white;
-    padding: ;
+    background-color: white;
+    color: blue;
+    border: solid blue;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 20px;
     font-family: 'Merienda One', cursive;
 
 }
 .hoverOver {
-    background-color: green;
+    background-color: maroon;
+    opacity: 0.5;
     color: white;
     border: solid white;
 }
@@ -80,8 +95,28 @@ header {
 .scoreboard {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 500px;
 }
 .currentPlayer{
     color: blue;
 }
+.audiobg{
+    background-color: red;
+}
+#win1, #win2{
+    width: 300px;
+    height: 300px;
+    justify-items: center;
+    align-items: center;
+    z-index:5;    
+}
+
+/*@media screen and (max-width: 700px){
+    
+    .gameContainer{
+        width:300px;
+        height: 300px;
+    }
+}*/

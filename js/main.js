@@ -1,16 +1,34 @@
 // Array of Winnig Patterns
 const winCondition = [["one","two","three"],["four","five","six"],["seven","eight","nine"],["one","four","seven"],["two","five","eight"],["three","six","nine"],["one","five","nine"],["three","five","seven"]];
+// Box Numbers
+let boxNumbers=["one","two","three","four","five","six","seven","eight","nine"];
 // Number of turns- to trigger a draw if winCond is not executed
 let numberOfturns = 0;
 let playerSelect ={'player1': [],'player2': []};
 let playerScore = { 'player1': 0, 'player': 0, 'draw': 0};
 let playerIs = "player1";
 let winningElement = [];
+//Logo to reload page
+$('.logo').click (function(){
+    location.reload();
+})
+// Background Sound
+let bgAudio = new Audio();
+    bgAudio.src = "sounds/mixkit-space-game-668.mp3";
+    bgAudio.autoplay = true;
+    bgAudio.load();
+    bgAudio.loop = true;
+    bgAudio.volume = 0.2;
 //Pause Audio
 $('.music').click (function(){
-    
+    $('.music').toggleClass("audiobg");
+    // if(bgAudio.paused){
+    //    bgAudio.play();
+    // }
+    // else{
+    bgAudio.pause();
+    // }
 })
-
 //Click Sound Effect
 $('.index').click( function(){
     let audioClick = new Audio();
@@ -48,13 +66,13 @@ $('#player2').keypress(function(e){
     if (e.which == 13){
         $('.two h3').text(playerText);
         $('#player2').prop('disabled',true);
-        $('#player1').hide();
+        $('#player2').hide();
         $('.two h4').text(playerScore['player2']);
 }})
 
 $('.start').on('click', startGame);
 $('.reset').on('click', resetGame);
-// Function to start the game
+// Function to start the game (Main Block)
 function startGame() {
 $('.index').click(function(){
     if (playerIs === "player1"){playerChar= 'X';}
@@ -62,18 +80,34 @@ else if(playerIs ==="player2"){ playerChar = 'O';}
     numberOfturns++
     $(this).text(playerChar);
     $(this).css({color: 'black', backgroundColor: 'white', border: 'solid black'});
-    // console.log($(this).attr('id'));
+    let posBox = boxNumbers.indexOf($(this).attr('id'));
+    boxNumbers.splice(posBox,1);
+    console.log("boxNumbers = "+boxNumbers);
+    aI();
     playerSelect[playerIs].push($(this).attr('id'));
     $(this).unbind('click');
     
     if (winCond()) {
-        console.log("Check Execution "+ winCond());
+       // console.log("Check Execution "+ winCond());
         // console.log(`The Winner is ${playerIs}`);
         alert(`The Winner is ${playerIs}`);
         console.log("winnig combo "+winningElement);
-        $(`#${winningElement[0]}`).css({backgroundColor: 'orange'});
-        $(`#${winningElement[1]}`).css({backgroundColor: 'orange'});
-        $(`#${winningElement[2]}`).css({backgroundColor: 'orange'});
+        $(`#${winningElement[0]}`).css({backgroundColor: 'red'});
+        $(`#${winningElement[1]}`).css({backgroundColor: 'red'});
+        $(`#${winningElement[2]}`).css({backgroundColor: 'red'});
+        if (playerIs === 'player1'){
+            //Display X Wins
+            $(div.gameContainer).prepend('<div id= "win1">X Wins!</div>');
+            $('#win1').fadeOut();
+            $('#win1').fadeIn(1500);
+        }
+        else{playerIs === 'player2'}{
+            //Display O Wins
+            $(div.gameContainer).prepend('<div id= "win2">O Wins!</div>');
+            $('#win2').fadeOut();
+            $('#win2').fadeIn(1500);
+            
+        }   
         playerScore[playerIs]++;
         console.log(`${playerIs} score = ${playerScore[playerIs]}`);
         $('.index').unbind('click');
@@ -83,6 +117,7 @@ else if(playerIs ==="player2"){ playerChar = 'O';}
     else if(drawCond()) {
         console.log(`It's a DRAW!`);
         alert(`It's a DRAW!`);
+        displayResult();
         playerScore['draw']++;
         $('.index').unbind('click');
         updateScore();
@@ -117,8 +152,8 @@ function winCond(){
             let element = winCondition[x];
             let hasWinCond = true;
             for(i=0;i<element.length; i++){
-                console.log(`$i=${i}--${playerSelect[playerIs]}--${playerIs}----- element(i)= ${element[i]}`);
-                console.log(playerSelect[playerIs].includes(element[i])) ;
+                // console.log(`$i=${i}--${playerSelect[playerIs]}--${playerIs}----- element(i)= ${element[i]}`);
+                // console.log(playerSelect[playerIs].includes(element[i])) ;
                 if (playerSelect[playerIs].includes(element[i])){
                     hasWinCond = true;
                 }
@@ -134,28 +169,30 @@ function winCond(){
                 return true;
             }
         } 
-       
     }
-//         winCondition.forEach(element => {
-//             for (i=0; i<element.length; i++) {
-//                 //console.log(`$i=${i}--${playerSelect[playerIs]}--${playerIs}----- element(i)= ${element[i]}`);
-//                 console.log(playerSelect[playerIs].includes(element[i])) ;
-                
-//                 if (playerSelect[playerIs].includes(element[i])){
-//                     hasWinCond = true;
-//                 }
-//                 else{
-//                     hasWinCond = false;
-//                 }
-//             } 
-//             console.log("2ndLast Check -->"+hasWinCond);    
-//             if (hasWinCond){
-//                 return true;
-//             }           
-//         });
-//         console.log("Last Check -->"+hasWinCond);
-//     }
 }
+// Display winner / draw
+function displayResult() {
+    if(drawCond) {
+        //display Draw
+    }
+    else if (winCond) {
+        $(`#${winningElement[0]}`).css({backgroundColor: 'blue'});
+        $(`#${winningElement[1]}`).css({backgroundColor: 'blue'});
+        $(`#${winningElement[2]}`).css({backgroundColor: 'blue'});
+        if (playerIs === 'player1'){
+            //Display X Wins
+            $(div.gameContainer).prepend('<div id= "win1">X Wins!</div>');
+            $('#win1').fadeIn(1500);
+        }
+        else{playerIs === 'player2'}{
+            //Display O Wins
+            $(div.gameContainer).prepend('<div id= "win2">O Wins!</div>');
+            $('#win2').fadeIn(1500);
+        }   
+    }
+}
+// Update Score
 function updateScore (){
     if (drawCond()){
         $('.draw h4').text(playerScore['draw']);}
@@ -173,11 +210,14 @@ function drawCond (){
 
 // Function to restart the game
 function resetGame(){
-    let numberOfturns = 0;
-    let playerSelect ={'player1': [],'player2': []};
-    $('.index').unbind('click');
-    
-    
+  location.reload();   
+}
+
+//AI Function 
+function aI(){
+    let aiIndex = Math.floor(Math.random()*boxNumbers.length);
+    console.log("Computer Chooses "+ boxNumbers[aiIndex]);
+   // return boxNumbers[aiIndex];
 }
 
 // winCondition.forEach(element => {

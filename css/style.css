@@ -1,15 +1,35 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Merienda+One&display=swap');
+/*font-family: 'Merienda One', cursive; */
 body { 
     background-color: brown;
     text-align: center;
+    font-family: 'Merienda One', cursive;
 }
+
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     text-align: center;
+    font-size: 3rem;
     
 }
+.logo { 
+    height: 80px;
+    width: 80px;
+}
+.music {
+    height: 80px;
+    width: 80px;
+
+}
 .container1 {
+    grid-area: right;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    font-size: 1.5rem;
 
 }
 .gameContainer {
@@ -30,11 +50,13 @@ header {
     background-color: black;
     color: white;
     border: solid white;
-    padding: 0;
+    padding: ;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+    font-family: 'Merienda One', cursive;
+
 }
 .hoverOver {
     background-color: green;

@@ -1,3 +1,4 @@
+
 // Array of Winnig Patterns
 const winCondition = [["one","two","three"],["four","five","six"],["seven","eight","nine"],["one","four","seven"],["two","five","eight"],["three","six","nine"],["one","five","nine"],["three","five","seven"]];
 // Box Numbers
@@ -5,29 +6,31 @@ let boxNumbers=["one","two","three","four","five","six","seven","eight","nine"];
 // Number of turns- to trigger a draw if winCond is not executed
 let numberOfturns = 0;
 let playerSelect ={'player1': [],'player2': []};
-let playerScore = { 'player1': 0, 'player': 0, 'draw': 0};
+let playerScore = { 'player1': 0, 'player2': 0, 'draw': 0};
 let playerIs = "player1";
 let winningElement = [];
 //Logo to reload page
 $('.logo').click (function(){
     location.reload();
 })
+$(document).ready(function(){
+    console.log("ready!")
+});
 // Background Sound
 let bgAudio = new Audio();
     bgAudio.src = "sounds/mixkit-space-game-668.mp3";
     bgAudio.autoplay = true;
-    bgAudio.load();
     bgAudio.loop = true;
     bgAudio.volume = 0.2;
 //Pause Audio
 $('.music').click (function(){
     $('.music').toggleClass("audiobg");
-    // if(bgAudio.paused){
-    //    bgAudio.play();
-    // }
-    // else{
+    if(bgAudio.paused){
+       bgAudio.play();
+    }
+    else{
     bgAudio.pause();
-    // }
+     }
 })
 //Click Sound Effect
 $('.index').click( function(){
@@ -56,6 +59,7 @@ $('#player1').keypress(function(e){
     let playerText=$(this).val();
     if (e.which == 13){
         $('.one h3').text(playerText);
+        localStorage.setItem("player1Name",playerText);
         $('#player1').prop('disabled',true);
         $('#player1').hide();
         $('.one h4').text(playerScore['player1']);
@@ -65,13 +69,14 @@ $('#player2').keypress(function(e){
     let playerText=$(this).val();
     if (e.which == 13){
         $('.two h3').text(playerText);
+        localStorage.setItem("player2Name",playerText);
         $('#player2').prop('disabled',true);
         $('#player2').hide();
         $('.two h4').text(playerScore['player2']);
 }})
 
 $('.start').on('click', startGame);
-$('.reset').on('click', resetGame);
+$('.ai').on('click', aI);
 // Function to start the game (Main Block)
 function startGame() {
 $('.index').click(function(){
@@ -79,11 +84,11 @@ $('.index').click(function(){
 else if(playerIs ==="player2"){ playerChar = 'O';}
     numberOfturns++
     $(this).text(playerChar);
-    $(this).css({color: 'black', backgroundColor: 'white', border: 'solid black'});
+    $(this).css({color: 'black', backgroundColor: 'grey', border: 'solid black', opacity: '0.8'});
     let posBox = boxNumbers.indexOf($(this).attr('id'));
-    boxNumbers.splice(posBox,1);
-    console.log("boxNumbers = "+boxNumbers);
-    aI();
+    boxNumbers.splice(posBox,1);// to check Ai
+    console.log("boxNumbers = "+boxNumbers);//to check Ai
+    //aI();   //to check Ai's choice
     playerSelect[playerIs].push($(this).attr('id'));
     $(this).unbind('click');
     
@@ -92,39 +97,41 @@ else if(playerIs ==="player2"){ playerChar = 'O';}
         // console.log(`The Winner is ${playerIs}`);
         alert(`The Winner is ${playerIs}`);
         console.log("winnig combo "+winningElement);
-        $(`#${winningElement[0]}`).css({backgroundColor: 'red'});
-        $(`#${winningElement[1]}`).css({backgroundColor: 'red'});
-        $(`#${winningElement[2]}`).css({backgroundColor: 'red'});
-        if (playerIs === 'player1'){
-            //Display X Wins
-            $(div.gameContainer).prepend('<div id= "win1">X Wins!</div>');
-            $('#win1').fadeOut();
-            $('#win1').fadeIn(1500);
-        }
-        else{playerIs === 'player2'}{
-            //Display O Wins
-            $(div.gameContainer).prepend('<div id= "win2">O Wins!</div>');
-            $('#win2').fadeOut();
-            $('#win2').fadeIn(1500);
+        $(`#${winningElement[0]}`).css({backgroundColor: 'red', transform:"rotate(45deg)"});
+        $(`#${winningElement[1]}`).css({backgroundColor: 'red', transform:"rotate(45deg)"});
+        $(`#${winningElement[2]}`).css({backgroundColor: 'red', transform:"rotate(45deg)"});
+        // if (playerIs === 'player1'){
+        //     //Display X Wins
+        //     $('div.gameContainer').prepend('<div id= "win1">X Wins!</div>');
+        //    // $('#win1').fadeOut();
+        //     $('#win1').fadeIn(4000);
+        // }
+        // else if(playerIs === 'player2'){
+        //     //Display O Wins
+        //     $('div.gameContainer').prepend('<div id= "win2">O Wins!</div>');
+        //     //$('#win2').fadeOut();
+        //     $('#win2').fadeIn(3000);
             
-        }   
+        // }   
         playerScore[playerIs]++;
+        localStorage.setItem(`${playerIs}Score`,playerScore[playerIs]);
         console.log(`${playerIs} score = ${playerScore[playerIs]}`);
         $('.index').unbind('click');
         updateScore();
-        // $('.gameContainer').dblclick(startGame);
+       // $('.gameContainer').dblclick(startGame);
     }
     else if(drawCond()) {
         console.log(`It's a DRAW!`);
         alert(`It's a DRAW!`);
         displayResult();
         playerScore['draw']++;
+        localStorage.setItem('drawScore', playerScore['draw']);
         $('.index').unbind('click');
         updateScore();
     }
-    console.log(numberOfturns);
-    console.log(playerIs);
-    console.log(playerSelect[playerIs]);    
+    // console.log(numberOfturns);
+    // console.log(playerIs);
+    // console.log(playerSelect[playerIs]);    
     switchPlayers();
 });
 }
@@ -162,10 +169,10 @@ function winCond(){
                     break;
                 }
             }
-            console.log("2ndLast Check -->"+hasWinCond);    
+            // console.log("2ndLast Check -->"+hasWinCond);    
             if (hasWinCond){
                 winningElement = element;
-            console.log(winningElement);
+            // console.log(winningElement);
                 return true;
             }
         } 
@@ -195,11 +202,17 @@ function displayResult() {
 // Update Score
 function updateScore (){
     if (drawCond()){
-        $('.draw h4').text(playerScore['draw']);}
+        //$('.draw h4').text(playerScore['draw']);
+        $('.draw h4').text(localStorage.getItem('drawScore'));
+    }
     if (playerIs === 'player1'){
-        $('.one h4').text(playerScore['player1']);}
+        // $('.one h4').text(playerScore['player1']);
+        $('.one h4').text(localStorage.getItem("player1Score"));
+    }
     if (playerIs === 'player2'){
-        $('.two h4').text(playerScore['player2']);}
+        // $('.two h4').text(playerScore['player2']);
+        $('.two h4').text(localStorage.getItem("player2Score"));
+    }
 }
 function drawCond (){
     // Draw
@@ -208,16 +221,15 @@ function drawCond (){
     }
 }
 
-// Function to restart the game
-function resetGame(){
-  location.reload();   
-}
-
 //AI Function 
 function aI(){
+
     let aiIndex = Math.floor(Math.random()*boxNumbers.length);
+    if (playerIs === 'player1' && numberOfturns <= 9 ){
     console.log("Computer Chooses "+ boxNumbers[aiIndex]);
+    alert("Computer Chooses "+ boxNumbers[aiIndex]);
    // return boxNumbers[aiIndex];
+    }
 }
 
 // winCondition.forEach(element => {

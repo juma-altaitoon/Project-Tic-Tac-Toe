@@ -74,7 +74,7 @@ $('#player2').keypress(function(e){
         $('#player2').hide();
         $('.two h4').text(playerScore['player2']);
 }})
-
+$('header h1').on('click',resetGame);
 $('.start').on('click', startGame);
 $('.ai').on('click', aI);
 // Function to start the game (Main Block)
@@ -220,7 +220,10 @@ function drawCond (){
         return true;
     }
 }
-
+// Reset game
+function resetGame(){
+    location.reload;
+}
 //AI Function 
 function aI(){
 

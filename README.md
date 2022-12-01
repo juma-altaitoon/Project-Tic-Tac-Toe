@@ -16,6 +16,7 @@
 * AI - Managed to convert the logic into a function that recommends a random box from the unselected boxes.
 *  Will improve on that in the future with an engaging 'PC' player.
 * I would have liked to add a 3D feel to the game, but I spent most of the time checking that the functions work.
+* Time Management.
 
 ### Logic Steps:
 * Player 1 & 2 enter respective names in respective input fields. these values will be reflected on the score board at the bottom or siide?
